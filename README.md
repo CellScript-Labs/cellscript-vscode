@@ -4,13 +4,6 @@ CellScript for VS Code gives `.cell` contracts the editor support you expect fro
 
 The extension talks to the CellScript compiler through `cellc --lsp`, so editor feedback comes from the same parser, type checker, and lowering pipeline used by the command line.
 
-## Who This Helps
-
-- Contract authors writing or reviewing `.cell` files.
-- CKB teams using CellScript packages in a local workspace.
-- Auditors who want fast navigation plus compiler evidence reports.
-- CellScript contributors testing grammar, snippets, LSP behaviour, and package workflows.
-
 ## What You Get
 
 ### Everyday Editing
