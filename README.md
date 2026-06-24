@@ -4,6 +4,17 @@ CellScript for VS Code gives `.cell` contracts the editor support you expect fro
 
 The extension talks to the CellScript compiler through `cellc --lsp`, so editor feedback comes from the same parser, type checker, and lowering pipeline used by the command line.
 
+## How It Fits Into The Toolchain
+
+The extension is a thin editor layer over the compiler. Syntax highlighting, snippets, and VS Code integration live in this repository, but language semantics come from `cellc`. That split keeps the editor useful without creating a second, weaker implementation of CellScript.
+
+There are two feedback loops:
+
+- the LSP loop, where `cellc --lsp` reports diagnostics, hover, completion, symbols, formatting, and navigation while you edit;
+- the command loop, where one-shot VS Code commands run compiler package, registry, builder, ABI, metadata, and production-report checks.
+
+Use the extension to shorten local authoring. Keep release evidence in the compiler, package, builder, registry, and CKB acceptance gates.
+
 ## What You Get
 
 ### Everyday Editing
