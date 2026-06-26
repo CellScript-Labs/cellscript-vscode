@@ -6,7 +6,7 @@ The extension talks to the CellScript compiler through `cellc --lsp`, so editor 
 
 ## How It Fits Into The Toolchain
 
-The extension is a thin editor layer over the compiler. Syntax highlighting, snippets, and VS Code integration live in this repository, but language semantics come from `cellc`. That split keeps the editor useful without creating a second, weaker implementation of CellScript.
+The extension is a compiler-backed editor surface. Syntax highlighting, snippets, and VS Code integration live in this repository, but language semantics come from `cellc`. That split keeps the editor useful without creating a second, weaker implementation of CellScript.
 
 There are two feedback loops:
 
@@ -101,7 +101,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the current 0.17 authoring surface. The extension follows the current CellScript action surface:
+This README documents the current 0.20 authoring surface. The extension follows the current CellScript action surface:
 
 ```cellscript
 action fill_offer(input: Offer) -> output: Offer {
