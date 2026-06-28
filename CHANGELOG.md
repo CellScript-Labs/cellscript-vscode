@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.20.0-rc.2
+## 0.20.0
 
 - Added VS Code commands for the 0.20 action-builder workflow:
   entry-witness ABI, action build plans, TypeScript builder generation,
