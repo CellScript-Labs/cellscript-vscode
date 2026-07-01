@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.21.0-rc.1
+
+- Aligned the extension package metadata with the CellScript 0.21 release
+  candidate.
+- Kept the editor command surface on the compiler-backed package, registry,
+  builder, ABI, metadata, and production-report commands while the compiler
+  adds the 0.21 CLI, MCP, receipt, ProtocolGraph, TemplateLayout, and
+  aggregate-helper evidence surfaces.
+- Refreshed README wording for the current 0.21 authoring surface.
+
 ## 0.20.0
 
 - Added VS Code commands for the 0.20 action-builder workflow:
