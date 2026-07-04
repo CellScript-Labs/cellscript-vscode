@@ -8,6 +8,9 @@
   builder, ABI, metadata, and production-report commands while the compiler
   adds the 0.21 CLI, MCP, receipt, ProtocolGraph, TemplateLayout, and
   aggregate-helper evidence surfaces.
+- Switched builder assumptions, transaction template, and deploy plan commands
+  to the canonical nested `cellc explain assumptions`, `cellc tx solve`, and
+  `cellc deploy plan` forms.
 - Refreshed README wording for the current 0.21 authoring surface.
 
 ## 0.20.0
