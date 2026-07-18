@@ -107,7 +107,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the current 0.21 authoring surface. The extension follows the current CellScript action surface:
+This README documents the current 0.22 authoring surface. The extension follows the current CellScript action surface:
 
 ```cellscript
 action fill_offer(input: Offer) -> output: Offer {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.22.0
+
+- Aligned the extension package metadata with the CellScript 0.22 language
+  line and its compiler-backed type, set, flow, evidence, and protocol-role
+  surfaces.
+- Kept editor diagnostics, hover, completion, formatting, metadata, ProofPlan,
+  and production-report commands on the same canonical 0.22 compiler boundary.
+
 ## 0.21.0-rc.1
 
 - Aligned the extension package metadata with the CellScript 0.21 release
