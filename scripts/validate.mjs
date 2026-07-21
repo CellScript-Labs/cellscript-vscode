@@ -147,6 +147,15 @@ for (const token of [
   "module",
   "enum",
   "invariant",
+  "forall",
+  "validity",
+  "borrow",
+  "consume_each",
+  "create_each",
+  "BoundedCellSet",
+  "BoundedList",
+  "InputView",
+  "OutputView",
   "by",
   "i32"
 ]) {
@@ -169,6 +178,11 @@ for (const snippet of [
   "module ",
   "use ",
   "enum ",
+  "enum-payload",
+  "invariant-forall",
+  "bounded-collection-action",
+  "borrow-view",
+  "validity",
   "flow-edge-by-action",
   "invariant "
 ]) {

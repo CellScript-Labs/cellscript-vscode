@@ -47,7 +47,7 @@ The command palette includes:
 
 These commands spawn `cellc` for one-shot evidence and build tasks. They do not replace release gates, deployment checks, transaction signing, or CKB node acceptance.
 
-The 0.21 compiler also ships `cellscript-mcp`, compile receipts
+The 0.22 compiler also ships `cellscript-mcp`, compile receipts
 (`cellc receipt`, `cellc sign-receipt`, `cellc verify-receipt`),
 ProtocolGraph, TemplateLayout, and helper-backed aggregate evidence. Those
 surfaces remain compiler/MCP commands rather than VS Code command-palette
@@ -107,7 +107,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the current 0.21 authoring surface. The extension follows the current CellScript action surface:
+This README documents the current 0.22 authoring surface. The extension follows the current CellScript action surface, including typed transaction views, finite invariant quantifiers, bounded collections, type validity, explicit borrow regions, and concrete payload enums:
 
 ```cellscript
 action fill_offer(input: Offer) -> output: Offer {

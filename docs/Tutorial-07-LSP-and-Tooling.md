@@ -1,3 +1,5 @@
+# Tutorial 07: LSP and Tooling
+
 You can write CellScript with any text editor and the `cellc` CLI. The LSP and
 VS Code extension make that loop shorter. Parse errors, type errors,
 flow mistakes, symbols, hovers, formatting, and compiler-backed reports
@@ -12,6 +14,12 @@ surface as `error`; future review notes can be reported as `warning` without
 making `ErrorReporter::has_errors()` true. Release gates and production
 commands remain error-gated, so a warning is a review signal rather than a
 deployment certificate.
+
+Backend diagnostics use stable `E2xxx` codes. LSP clients receive the code in
+the standard diagnostic `code` field and a `codeDescription` link to the
+compiler registry, so diagnostic-detail UI can show the exact rule instead of
+only the message. The same record is available through
+`cellc explain E2202 --json`.
 
 ## What You Will Learn
 
@@ -51,6 +59,11 @@ cellc --lsp
 ```
 
 In practice you usually let the editor start it for you.
+
+On 0.22, qualified enum completion includes concrete payload constructors.
+Enum hover reads the same compiler metadata as `cellc metadata` and shows the
+tagged-union layout, ABI, storage class, encoded width, and linear-payload flag.
+Generic or variable-width payload ADTs remain unsupported.
 
 ## VS Code Extension
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.22.0
+
+- Restored a remotely reachable 0.22 extension release commit and aligned the
+  manifest with CellScript 0.22.0.
+- Added TextMate and snippet coverage for typed transaction views, finite
+  invariant quantifiers, source-aware bounded collections, type `validity`,
+  explicit borrow regions, and concrete payload enums.
+- Kept compiler-backed commands on the canonical nested CLI tree and the
+  global `--json` machine-output contract.
+- Documented stable `E2xxx` compiler diagnostics and LSP `codeDescription`
+  links.
+
 ## 0.21.0-rc.1
 
 - Aligned the extension package metadata with the CellScript 0.21 release
