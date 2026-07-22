@@ -2,6 +2,8 @@
 
 ## 0.22.0
 
+- Highlight the `script::...` helpers and nested
+  `verifier::btc::bip340::...` runtime-verifier namespace.
 - Restored a remotely reachable 0.22 extension release commit and aligned the
   manifest with CellScript 0.22.0.
 - Added TextMate and snippet coverage for typed transaction views, finite
