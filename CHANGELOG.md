@@ -5,8 +5,16 @@
 - Aligned the extension package metadata with the CellScript 0.22 language
   line and its compiler-backed type, set, flow, evidence, and protocol-role
   surfaces.
+- Highlight the `script::...` helpers and nested
+  `verifier::btc::bip340::...` runtime-verifier namespace.
+- Added TextMate and snippet coverage for typed transaction views, finite
+  invariant quantifiers, source-aware bounded collections, type `validity`,
+  explicit borrow regions, and concrete payload enums.
 - Kept editor diagnostics, hover, completion, formatting, metadata, ProofPlan,
-  and production-report commands on the same canonical 0.22 compiler boundary.
+  and production-report commands on the canonical nested CLI tree and global
+  `--json` machine-output contract.
+- Documented stable `E2xxx` compiler diagnostics and LSP `codeDescription`
+  links.
 
 ## 0.21.0-rc.1
 
