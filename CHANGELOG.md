@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.23.0
+
+- Aligned the extension package metadata with CellScript 0.23.0, Edition 2026,
+  metadata schema 57, and the resolved compatibility-profile identity.
+- Kept diagnostics, hover, completion, formatting, metadata, ProofPlan, and
+  generated-builder commands on the canonical `WitnessArgs.input_type` entry
+  placement and current compiler CLI surface.
+- Kept package and Registry verification commands aligned with the 0.23
+  compiler and release gates.
+
 ## 0.22.0
 
 - Aligned the extension package metadata with the CellScript 0.22 language
