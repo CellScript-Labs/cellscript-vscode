@@ -159,15 +159,15 @@
       "patterns": [
         {
           "name": "keyword.control.cellscript",
-          "match": "\\b(module|use|if|else|for|forall|in|where|while|match|return|let|mut|ref|as|borrow|verification|validity)\\b"
+          "match": "\\b(module|use|if|else|for|forall|in|where|while|match|return|break|continue|label|let|mut|ref|as|borrow|verification|validity)\\b"
         },
         {
           "name": "keyword.declaration.cellscript",
-          "match": "\\b(resource|shared|receipt|struct|const|enum|flow|action|fn|lock)\\b"
+          "match": "\\b(public|private|package|resource|shared|receipt|struct|const|enum|flow|action|fn|lock)\\b"
         },
         {
           "name": "keyword.other.cellscript",
-          "match": "\\b(has|store|consume|consume_each|create|create_each|create_unique|replace_unique|read|read_ref|launch|transition|by|self|env|with_lock|assert|assert_invariant|invariant|require|preserve|from|input|output|protected|witness|lock_args|script_args|transfer|claim|settle|destroy|destroy_singleton_type|destroy_unique|destroy_instance|burn_amount|std|replace|burn|relock|retarget_type|identity|ckb_type_id|singleton_type|with_default_hash_type|with_capacity_floor)\\b"
+          "match": "\\b(has|phantom|copy|drop|store|fixed|serializable|non_linear|cell|consume|consume_each|create|create_each|create_unique|replace_unique|read|read_ref|launch|transition|by|self|env|with_lock|assert|assert_invariant|invariant|require|preserve|from|input|output|protected|witness|lock_args|script_args|transfer|claim|settle|destroy|destroy_singleton_type|destroy_unique|destroy_instance|burn_amount|std|replace|burn|relock|retarget_type|identity|ckb_type_id|singleton_type|with_default_hash_type|with_capacity_floor)\\b"
         },
         {
           "name": "constant.language.boolean.cellscript",
@@ -183,7 +183,7 @@
         },
         {
           "name": "support.type.collection.cellscript",
-          "match": "\\b(Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|CellDepView|HeaderDepView|WitnessArgsView|OutPoint|ScriptView)\\b"
+          "match": "\\b(Option|Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|CellDepView|HeaderDepView|WitnessArgsView|OutPoint|ScriptView)\\b"
         },
         {
           "name": "support.type.effect.cellscript",
@@ -239,7 +239,7 @@
       "patterns": [
         {
           "name": "keyword.operator.cellscript",
-          "match": "->|=>|::|==|!=|<=|>=|&&|\\|\\||\\+=|[-+*/%=&|!<>]"
+          "match": "->|=>|::|<<|>>|==|!=|<=|>=|&&|\\|\\||\\+=|[-+*/%=&|!<>^]"
         },
         {
           "name": "punctuation.separator.cellscript",
