@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.24 development line
+
+- Added command-palette flows to validate LS-IDL, append the raw IDL SHA-256
+  commitment to a CKB executable, and fetch exact IDL bytes by deployed Script
+  identity.
+- Added an optional Registry API setting for private or test deployments and
+  documented the interface-identity trust boundary.
+
 ## 0.22.0
 
 - Aligned the extension package metadata with the CellScript 0.22 language

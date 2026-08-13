@@ -44,8 +44,17 @@ The command palette includes:
 - `CellScript: Show Profile`
 - `CellScript: Generate Audit Bundle`
 - `CellScript: Show Production Report`
+- `CellScript: Validate LS-IDL`
+- `CellScript: Bind LS-IDL to CKB Executable`
+- `CellScript: Fetch LS-IDL by CKB Script`
 
 These commands spawn `cellc` for one-shot evidence and build tasks. They do not replace release gates, deployment checks, transaction signing, or CKB node acceptance.
+
+The LS-IDL commands keep interface identity byte-exact: validation checks the
+supported schema, binding appends `SHA-256(idl.json)` to the selected CKB
+executable, and fetch saves the Registry response without parsing and
+reserialising it. The commitment proves byte identity and placement; it does
+not prove that a Lock Script implements the described interface correctly.
 
 The 0.22 compiler also ships `cellscript-mcp`, compile receipts
 (`cellc receipt`, `cellc sign-receipt`, `cellc verify-receipt`),
@@ -102,6 +111,7 @@ For package-based projects, run package commands from a file under the nearest `
 | `cellscript.builderOutputDir` | `target/cellscript-builder/typescript` | Output directory for generated TypeScript action builders. |
 | `cellscript.ckbRpcUrl` | empty | Optional CKB RPC URL for live registry verification. |
 | `cellscript.deploymentNetwork` | empty | Optional deployment network filter for live registry checks and builder identity binding. |
+| `cellscript.registryApiUrl` | empty | Optional Registry API base URL for LS-IDL fetch; empty uses the compiler default. |
 | `cellscript.registryRequirePublisherSignature` | `false` | Adds the publisher-signature metadata gate to registry verification. |
 | `cellscript.registryRequireAuditReport` | `false` | Adds the audit-report metadata gate to registry verification. |
 

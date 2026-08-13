@@ -77,7 +77,10 @@ const requiredCommands = [
   "cellscript.showDeployPlan",
   "cellscript.showProfile",
   "cellscript.generateAuditBundle",
-  "cellscript.showProductionReport"
+  "cellscript.showProductionReport",
+  "cellscript.validateLsIdl",
+  "cellscript.bindLsIdl",
+  "cellscript.fetchLsIdl"
 ];
 
 const commands = new Set((pkg.contributes?.commands || []).map((command) => command.command));
@@ -101,6 +104,7 @@ for (const setting of [
   "cellscript.builderOutputDir",
   "cellscript.ckbRpcUrl",
   "cellscript.deploymentNetwork",
+  "cellscript.registryApiUrl",
   "cellscript.registryRequirePublisherSignature",
   "cellscript.registryRequireAuditReport"
 ]) {
@@ -207,6 +211,11 @@ for (const token of [
   "plan",
   "profile",
   "audit-bundle",
+  "artifact",
+  "ls-idl",
+  "validateLsIdl",
+  "bindLsIdl",
+  "fetchLsIdl",
   "cellc",
   "Cell.toml",
   "action",
