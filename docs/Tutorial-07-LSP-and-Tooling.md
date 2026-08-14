@@ -1,3 +1,5 @@
+# Tutorial 07: LSP and Tooling
+
 You can write CellScript with any text editor and the `cellc` CLI. The LSP and
 VS Code extension make that loop shorter. Parse errors, type errors,
 flow mistakes, symbols, hovers, formatting, and compiler-backed reports
@@ -12,6 +14,12 @@ surface as `error`; future review notes can be reported as `warning` without
 making `ErrorReporter::has_errors()` true. Release gates and production
 commands remain error-gated, so a warning is a review signal rather than a
 deployment certificate.
+
+Backend diagnostics use stable `E2xxx` codes. LSP clients receive the code in
+the standard diagnostic `code` field and a `codeDescription` link to the
+compiler registry, so diagnostic-detail UI can show the exact rule instead of
+only the message. The same record is available through
+`cellc explain E2202 --json`.
 
 ## What You Will Learn
 
@@ -52,6 +60,11 @@ cellc --lsp
 
 In practice you usually let the editor start it for you.
 
+On 0.22, qualified enum completion includes concrete payload constructors.
+Enum hover reads the same compiler metadata as `cellc metadata` and shows the
+tagged-union layout, ABI, storage class, encoded width, and linear-payload flag.
+Generic or variable-width payload ADTs remain unsupported.
+
 ## VS Code Extension
 
 The extension lives in:
@@ -83,6 +96,7 @@ Useful settings:
 | `cellscript.builderOutputDir` | Output directory for generated TypeScript action-builder packages. Relative paths resolve from the nearest package `Cell.toml`. |
 | `cellscript.ckbRpcUrl` | Optional CKB RPC URL for live registry verification. |
 | `cellscript.deploymentNetwork` | Optional network filter for live registry verification and generated builder deployment binding. |
+| `cellscript.registryApiUrl` | Optional Registry API base URL used by LS-IDL fetch. |
 | `cellscript.registryRequirePublisherSignature` | Add `--require-publisher-signature` to registry verification commands. This is a metadata-presence gate, not cryptographic signature verification. |
 | `cellscript.registryRequireAuditReport` | Add `--require-audit-report` to registry verification commands. |
 
@@ -95,11 +109,27 @@ The extension contributes commands for the local compiler and builder loop:
 | `CellScript: Show Constraints` | `cellc constraints` |
 | `CellScript: Show Entry Witness ABI` | selects an action/lock, then runs `cellc abi` |
 | `CellScript: Show Action Build Plan` | selects an action, then runs `cellc action build --json` |
+| `CellScript: Show Builder Assumptions` | `cellc explain assumptions --json` |
+| `CellScript: Show Transaction Template` | `cellc tx solve --json` |
+| `CellScript: Show Deploy Plan` | `cellc deploy plan --json` |
+| `CellScript: Show Profile` | `cellc profile --json` |
+| `CellScript: Generate Audit Bundle` | `cellc audit-bundle --output <scratch> --json` |
 | `CellScript: Generate TypeScript Action Builder` | `cellc gen-builder --target typescript` |
 | `CellScript: Verify Package` | `cellc package verify --json` |
 | `CellScript: Verify Registry` | `cellc registry verify --json` |
 | `CellScript: Verify Live Registry` | `cellc registry verify --live --json` |
 | `CellScript: Show Production Report` | compiler version + metadata + constraints + release-audit boundary |
+| `CellScript: Validate LS-IDL` | `cellc artifact ls-idl validate --idl <active-json>` |
+| `CellScript: Bind LS-IDL to CKB Executable` | `cellc artifact ls-idl bind --idl <active-json> --executable <file>` |
+| `CellScript: Fetch LS-IDL by CKB Script` | `cellc artifact ls-idl fetch --code-hash <hash> --output idl.json` |
+
+The editor saves fetched IDL as the exact response bytes and leaves schema,
+digest, and executable-suffix checks to `cellc`. This is an interface identity
+check, not proof of implementation correctness or a security audit.
+
+The 0.21 compiler also ships `cellscript-mcp`, compile receipts, ProtocolGraph,
+TemplateLayout, and helper-backed aggregate evidence. Those remain compiler/MCP
+surfaces in this extension release rather than command-palette entries.
 
 `CellScript: Show Production Report` is useful while editing because it displays
 compiler version, metadata, constraints, and release-audit boundaries.

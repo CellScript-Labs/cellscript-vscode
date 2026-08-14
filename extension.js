@@ -116,6 +116,24 @@ function activate(context) {
       if (document) {
         await runProductionReport(document, output, status);
       }
+    }),
+    vscode.commands.registerCommand("cellscript.validateLsIdl", async () => {
+      const document = await activeLsIdlDocument();
+      if (document) {
+        await runLsIdlValidate(document, output, status);
+      }
+    }),
+    vscode.commands.registerCommand("cellscript.bindLsIdl", async () => {
+      const document = await activeLsIdlDocument();
+      if (document) {
+        await runLsIdlBind(document, output, status);
+      }
+    }),
+    vscode.commands.registerCommand("cellscript.fetchLsIdl", async () => {
+      const document = compilerContextDocument();
+      if (document) {
+        await runLsIdlFetch(document, output, status);
+      }
     })
   );
 }
@@ -230,6 +248,32 @@ function activeCellScriptDocument() {
     return null;
   }
   return editor.document;
+}
+
+async function activeLsIdlDocument() {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor || editor.document.uri.scheme !== "file" || !editor.document.uri.fsPath.endsWith(".json")) {
+    vscode.window.showWarningMessage("Open the LS-IDL JSON file first.");
+    return null;
+  }
+  if (editor.document.isDirty && !(await editor.document.save())) {
+    vscode.window.showErrorMessage("Save the LS-IDL file before validating or binding it.");
+    return null;
+  }
+  return editor.document;
+}
+
+function compilerContextDocument() {
+  const document = vscode.window.activeTextEditor?.document;
+  if (document?.uri?.scheme === "file") {
+    return document;
+  }
+  const workspace = vscode.workspace.workspaceFolders?.[0];
+  if (workspace) {
+    return { uri: workspace.uri };
+  }
+  vscode.window.showWarningMessage("Open a workspace or file before fetching LS-IDL.");
+  return null;
 }
 
 async function resolveCompilerCommand(document) {
@@ -496,6 +540,105 @@ async function runRegistryVerify(document, output, status, live) {
   });
 }
 
+async function runLsIdlValidate(document, output, status) {
+  await runSingleCellcCommand(document, output, status, {
+    source: "cellc artifact ls-idl validate",
+    args: ["artifact", "ls-idl", "validate", "--idl", document.uri.fsPath, "--json"],
+    cwd: path.dirname(document.uri.fsPath),
+    input: document.uri.fsPath,
+    successMessage: "LS-IDL schema is valid.",
+    errorMessage: "LS-IDL validation"
+  });
+}
+
+async function runLsIdlBind(document, output, status) {
+  const executable = await vscode.window.showOpenDialog({
+    canSelectFiles: true,
+    canSelectFolders: false,
+    canSelectMany: false,
+    title: "Select the CKB executable to bind",
+    filters: { "CKB executable": ["elf", "bin", "*"], "All files": ["*"] }
+  });
+  if (!executable?.[0]) return;
+  const sourcePath = executable[0].fsPath;
+  const outputUri = await vscode.window.showSaveDialog({
+    title: "Save the LS-IDL-bound executable",
+    defaultUri: vscode.Uri.file(`${sourcePath}.ls-idl`)
+  });
+  if (!outputUri) return;
+  await runSingleCellcCommand(document, output, status, {
+    source: "cellc artifact ls-idl bind",
+    args: [
+      "artifact", "ls-idl", "bind",
+      "--idl", document.uri.fsPath,
+      "--executable", sourcePath,
+      "--output", outputUri.fsPath,
+      "--json"
+    ],
+    cwd: path.dirname(document.uri.fsPath),
+    input: document.uri.fsPath,
+    outputPath: outputUri.fsPath,
+    successMessage: `LS-IDL digest appended to ${outputUri.fsPath}`,
+    errorMessage: "LS-IDL executable binding"
+  });
+}
+
+async function runLsIdlFetch(document, output, status) {
+  const codeHash = await vscode.window.showInputBox({
+    title: "Fetch LS-IDL",
+    prompt: "CKB Script code hash",
+    placeHolder: "0x followed by 64 hexadecimal characters",
+    validateInput: (value) => /^0x[0-9a-fA-F]{64}$/.test(value.trim()) ? null : "Enter a 32-byte 0x-prefixed code hash."
+  });
+  if (!codeHash) return;
+  const hashType = await vscode.window.showQuickPick(["data1", "data2", "data", "type"], {
+    title: "Select the Script hash type"
+  });
+  if (!hashType) return;
+  let dataHash = "";
+  if (hashType === "type") {
+    const selected = await vscode.window.showInputBox({
+      title: "Disambiguate type-hash deployment",
+      prompt: "Code Cell data hash",
+      placeHolder: "0x followed by 64 hexadecimal characters",
+      validateInput: (value) => /^0x[0-9a-fA-F]{64}$/.test(value.trim()) ? null : "Enter a 32-byte 0x-prefixed data hash."
+    });
+    if (!selected) return;
+    dataHash = selected.trim();
+  }
+  const configuredNetwork = vscode.workspace.getConfiguration("cellscript", document.uri).get("deploymentNetwork", "");
+  const network = configuredNetwork || await vscode.window.showQuickPick(["mainnet", "testnet"], {
+    title: "Select the Registry network"
+  });
+  if (!network) return;
+  const workspace = vscode.workspace.getWorkspaceFolder(document.uri)?.uri;
+  const outputUri = await vscode.window.showSaveDialog({
+    title: "Save exact LS-IDL bytes",
+    defaultUri: workspace ? vscode.Uri.joinPath(workspace, "idl.json") : vscode.Uri.file(path.join(os.tmpdir(), "idl.json")),
+    filters: { "JSON": ["json"] }
+  });
+  if (!outputUri) return;
+  const args = [
+    "artifact", "ls-idl", "fetch",
+    "--code-hash", codeHash.trim(),
+    "--hash-type", hashType,
+    "--network", network,
+    "--output", outputUri.fsPath,
+    "--json"
+  ];
+  if (dataHash) args.push("--data-hash", dataHash);
+  const apiUrl = vscode.workspace.getConfiguration("cellscript", document.uri).get("registryApiUrl", "").trim();
+  if (apiUrl) args.push("--api-url", apiUrl);
+  await runSingleCellcCommand(document, output, status, {
+    source: "cellc artifact ls-idl fetch",
+    args,
+    cwd: workspace?.fsPath,
+    outputPath: outputUri.fsPath,
+    successMessage: `Exact LS-IDL bytes saved to ${outputUri.fsPath}`,
+    errorMessage: "LS-IDL fetch"
+  });
+}
+
 async function selectMetadataEntry(document, output, status, input, options) {
   const metadata = await loadMetadataForSelection(document, output, status, input, options.source);
   if (!metadata) {
@@ -649,25 +792,25 @@ function buildReportPlan(document, kind, cwd) {
 
   if (kind === "builder-assumptions") {
     return {
-      args: ["explain-assumptions", document.uri.fsPath, ...targetProfileArgs(document), "--json"],
+      args: ["explain", "assumptions", document.uri.fsPath, ...targetProfileArgs(document), "--json"],
       outputPath: null,
-      source: "cellc explain-assumptions"
+      source: "cellc explain assumptions"
     };
   }
 
   if (kind === "tx-template") {
     return {
-      args: ["solve-tx", document.uri.fsPath, ...targetProfileArgs(document), "--json"],
+      args: ["tx", "solve", document.uri.fsPath, ...targetProfileArgs(document), "--json"],
       outputPath: null,
-      source: "cellc solve-tx"
+      source: "cellc tx solve"
     };
   }
 
   if (kind === "deploy-plan") {
     return {
-      args: ["deploy-plan", document.uri.fsPath, ...targetProfileArgs(document), "--json"],
+      args: ["deploy", "plan", document.uri.fsPath, ...targetProfileArgs(document), "--json"],
       outputPath: null,
-      source: "cellc deploy-plan"
+      source: "cellc deploy plan"
     };
   }
 

@@ -77,7 +77,10 @@ const requiredCommands = [
   "cellscript.showDeployPlan",
   "cellscript.showProfile",
   "cellscript.generateAuditBundle",
-  "cellscript.showProductionReport"
+  "cellscript.showProductionReport",
+  "cellscript.validateLsIdl",
+  "cellscript.bindLsIdl",
+  "cellscript.fetchLsIdl"
 ];
 
 const commands = new Set((pkg.contributes?.commands || []).map((command) => command.command));
@@ -101,6 +104,7 @@ for (const setting of [
   "cellscript.builderOutputDir",
   "cellscript.ckbRpcUrl",
   "cellscript.deploymentNetwork",
+  "cellscript.registryApiUrl",
   "cellscript.registryRequirePublisherSignature",
   "cellscript.registryRequireAuditReport"
 ]) {
@@ -143,7 +147,21 @@ for (const token of [
   "assert_delta",
   "assert_distinct",
   "assert_singleton",
-  "retarget_type"
+  "retarget_type",
+  "module",
+  "enum",
+  "invariant",
+  "forall",
+  "validity",
+  "borrow",
+  "consume_each",
+  "create_each",
+  "BoundedCellSet",
+  "BoundedList",
+  "InputView",
+  "OutputView",
+  "by",
+  "i32"
 ]) {
   if (!grammarText.includes(token)) {
     throw new Error(`grammar is missing current CellScript editor surface token: ${token}`);
@@ -160,7 +178,17 @@ for (const snippet of [
   "assert_delta",
   "assert_distinct",
   "assert_singleton",
-  "#[type_id"
+  "#[type_id",
+  "module ",
+  "use ",
+  "enum ",
+  "enum-payload",
+  "invariant-forall",
+  "bounded-collection-action",
+  "borrow-view",
+  "validity",
+  "flow-edge-by-action",
+  "invariant "
 ]) {
   if (!snippetsText.includes(snippet)) {
     throw new Error(`snippets are missing current CellScript authoring surface: ${snippet}`);
@@ -175,11 +203,19 @@ for (const token of [
   "LanguageClient",
   "vscode-languageclient/node",
   ...requiredCommands,
-  "explain-assumptions",
-  "solve-tx",
-  "deploy-plan",
+  "explain",
+  "assumptions",
+  "tx",
+  "solve",
+  "deploy",
+  "plan",
   "profile",
   "audit-bundle",
+  "artifact",
+  "ls-idl",
+  "validateLsIdl",
+  "bindLsIdl",
+  "fetchLsIdl",
   "cellc",
   "Cell.toml",
   "action",

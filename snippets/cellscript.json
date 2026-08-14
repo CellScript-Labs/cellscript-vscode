@@ -47,6 +47,49 @@
     ],
     "description": "Create a CellScript receipt"
   },
+  "Module": {
+    "prefix": "module",
+    "body": [
+      "module ${1:cellscript::package::contract}"
+    ],
+    "description": "Declare a CellScript module path"
+  },
+  "Use": {
+    "prefix": "use",
+    "body": [
+      "use ${1:cellscript::package::module}::${2:Type}"
+    ],
+    "description": "Import a symbol from another CellScript module"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:State} {",
+      "    ${2:Created},",
+      "    ${3:Live}",
+      "}"
+    ],
+    "description": "Declare a CellScript enum"
+  },
+  "Payload Enum": {
+    "prefix": "enum-payload",
+    "body": [
+      "enum ${1:Result} {",
+      "    ${2:None},",
+      "    ${3:Some}(${4:u64})",
+      "}"
+    ],
+    "description": "Declare a concrete fixed-width payload enum"
+  },
+  "Type Validity": {
+    "prefix": "validity",
+    "body": [
+      "validity",
+      "    require ${1:amount} > 0",
+      "    require ${2:locktime} > env::block_number()"
+    ],
+    "description": "Declare pure value predicates for a persistent type"
+  },
   "Effect Attribute": {
     "prefix": "effect",
     "body": [
@@ -113,9 +156,9 @@
   "Transition": {
     "prefix": "transition",
     "body": [
-      "transition ${1:input} -> ${2:output}"
+      "transition ${1:input}.${2:state}: ${3:From} -> ${4:output}.${2:state}: ${5:To}"
     ],
-    "description": "Declare a one-to-one input-output state continuation"
+    "description": "Declare a field-path state continuation"
   },
   "Flow": {
     "prefix": "flow",
@@ -125,6 +168,61 @@
       "}"
     ],
     "description": "Declare valid state edges for a state field"
+  },
+  "Flow Edge By Action": {
+    "prefix": "flow-edge-by-action",
+    "body": [
+      "flow ${1:Name} for ${2:Type}.${3:state} {",
+      "    ${4:Created} -> ${5:Live} by ${6:activate};",
+      "}"
+    ],
+    "description": "Declare a flow edge bound to an action"
+  },
+  "Invariant": {
+    "prefix": "invariant",
+    "body": [
+      "invariant ${1:name} {",
+      "    trigger: ${2:type_group}",
+      "    scope: ${3:group}",
+      "    reads: ${4:group_inputs<Token>.amount}, ${5:group_outputs<Token>.amount}",
+      "    assert_sum(${5}) == assert_sum(${4})",
+      "}"
+    ],
+    "description": "Declare an invariant with explicit trigger, scope, reads, and proof relation"
+  },
+  "Finite Invariant Quantifier": {
+    "prefix": "invariant-forall",
+    "body": [
+      "forall ${1:output} ${2:item} in group_outputs<${3:Token}> {",
+      "    require ${2:item}.${4:amount} > 0",
+      "}"
+    ],
+    "description": "Quantify over a finite typed transaction source view"
+  },
+  "Bounded Collection Action": {
+    "prefix": "bounded-collection-action",
+    "body": [
+      "action ${1:batch}(input ${2:inputs}: BoundedCellSet<${3:Token}, ${4:16}>, witness ${5:plans}: BoundedList<${6:Plan}, ${4:16}>) -> u64 {",
+      "    verification",
+      "        consume_each ${7:item} in ${2:inputs} {",
+      "            require ${7:item}.${8:amount} > 0",
+      "        }",
+      "        create_each ${9:plan} in ${5:plans} {",
+      "            require ${9:plan}.${8:amount} > 0",
+      "        }",
+      "        return 0",
+      "}"
+    ],
+    "description": "Declare finite input and witness collection iteration"
+  },
+  "Borrow Region": {
+    "prefix": "borrow-view",
+    "body": [
+      "borrow ${1:root} as ${2:view} {",
+      "    require ${2:view}.${3:amount} > 0",
+      "}"
+    ],
+    "description": "Create a compile-time-only read view over a linear Cell"
   },
   "Read Parameter": {
     "prefix": "read",

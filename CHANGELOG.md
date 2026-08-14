@@ -1,6 +1,43 @@
 # Changelog
 
-## Unreleased
+## 0.24 development line
+
+- Added command-palette flows to validate LS-IDL, append the raw IDL SHA-256
+  commitment to a CKB executable, and fetch exact IDL bytes by deployed Script
+  identity.
+- Added an optional Registry API setting for private or test deployments and
+  documented the interface-identity trust boundary.
+
+## 0.22.0
+
+- Aligned the extension package metadata with the CellScript 0.22 language
+  line and its compiler-backed type, set, flow, evidence, and protocol-role
+  surfaces.
+- Highlight the `script::...` helpers and nested
+  `verifier::btc::bip340::...` runtime-verifier namespace.
+- Added TextMate and snippet coverage for typed transaction views, finite
+  invariant quantifiers, source-aware bounded collections, type `validity`,
+  explicit borrow regions, and concrete payload enums.
+- Kept editor diagnostics, hover, completion, formatting, metadata, ProofPlan,
+  and production-report commands on the canonical nested CLI tree and global
+  `--json` machine-output contract.
+- Documented stable `E2xxx` compiler diagnostics and LSP `codeDescription`
+  links.
+
+## 0.21.0-rc.1
+
+- Aligned the extension package metadata with the CellScript 0.21 release
+  candidate.
+- Kept the editor command surface on the compiler-backed package, registry,
+  builder, ABI, metadata, and production-report commands while the compiler
+  adds the 0.21 CLI, MCP, receipt, ProtocolGraph, TemplateLayout, and
+  aggregate-helper evidence surfaces.
+- Switched builder assumptions, transaction template, and deploy plan commands
+  to the canonical nested `cellc explain assumptions`, `cellc tx solve`, and
+  `cellc deploy plan` forms.
+- Refreshed README wording for the current 0.21 authoring surface.
+
+## 0.20.0
 
 - Added VS Code commands for the 0.20 action-builder workflow:
   entry-witness ABI, action build plans, TypeScript builder generation,

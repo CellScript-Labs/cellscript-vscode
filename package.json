@@ -2,7 +2,7 @@
   "name": "cellscript-vscode",
   "displayName": "CellScript",
   "description": "Production-grade local VS Code tooling for CellScript (.cell) contracts.",
-  "version": "0.17.0",
+  "version": "0.22.0",
   "publisher": "arthurzhang",
   "license": "MIT",
   "main": "./dist/extension.js",
@@ -33,7 +33,10 @@
     "onCommand:cellscript.showDeployPlan",
     "onCommand:cellscript.showProfile",
     "onCommand:cellscript.generateAuditBundle",
-    "onCommand:cellscript.showProductionReport"
+    "onCommand:cellscript.showProductionReport",
+    "onCommand:cellscript.validateLsIdl",
+    "onCommand:cellscript.bindLsIdl",
+    "onCommand:cellscript.fetchLsIdl"
   ],
   "scripts": {
     "build": "esbuild extension.js --bundle --platform=node --format=cjs --external:vscode --minify --outfile=dist/extension.js",
@@ -143,6 +146,18 @@
       {
         "command": "cellscript.showProductionReport",
         "title": "CellScript: Show Production Report"
+      },
+      {
+        "command": "cellscript.validateLsIdl",
+        "title": "CellScript: Validate LS-IDL"
+      },
+      {
+        "command": "cellscript.bindLsIdl",
+        "title": "CellScript: Bind LS-IDL to CKB Executable"
+      },
+      {
+        "command": "cellscript.fetchLsIdl",
+        "title": "CellScript: Fetch LS-IDL by CKB Script"
       }
     ],
     "menus": {
@@ -221,6 +236,16 @@
           "command": "cellscript.showProductionReport",
           "when": "resourceLangId == cellscript",
           "group": "cellscript@15"
+        },
+        {
+          "command": "cellscript.validateLsIdl",
+          "when": "resourceLangId == json",
+          "group": "cellscript@16"
+        },
+        {
+          "command": "cellscript.bindLsIdl",
+          "when": "resourceLangId == json",
+          "group": "cellscript@17"
         }
       ],
       "commandPalette": [
@@ -283,6 +308,17 @@
         {
           "command": "cellscript.showProductionReport",
           "when": "editorLangId == cellscript"
+        },
+        {
+          "command": "cellscript.validateLsIdl",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "cellscript.bindLsIdl",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "cellscript.fetchLsIdl"
         }
       ]
     },
@@ -334,6 +370,11 @@
           "type": "string",
           "default": "",
           "description": "Optional deployment network filter for live registry verification and generated builder deployment identity binding."
+        },
+        "cellscript.registryApiUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Optional Registry API base URL used by LS-IDL fetch. Empty uses the compiler's production default."
         },
         "cellscript.registryRequirePublisherSignature": {
           "type": "boolean",
