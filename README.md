@@ -117,7 +117,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the current 0.22 authoring surface. The extension follows the current CellScript action surface, including typed transaction views, finite invariant quantifiers, bounded collections, type validity, explicit borrow regions, and concrete payload enums:
+This README documents the current 0.24 authoring surface. The extension follows the current CellScript action surface, including typed transaction views, finite invariant quantifiers, bounded collections, type validity, explicit borrow regions, and concrete payload enums:
 
 ```cellscript
 action fill_offer(input: Offer) -> output: Offer {

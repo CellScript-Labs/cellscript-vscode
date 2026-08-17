@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.24 development line
+## 0.24.0
 
 - Added command-palette flows to validate LS-IDL, append the raw IDL SHA-256
   commitment to a CKB executable, and fetch exact IDL bytes by deployed Script
