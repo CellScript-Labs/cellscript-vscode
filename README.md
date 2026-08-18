@@ -107,7 +107,13 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the 0.25 nightly authoring surface. The extension follows the current CellScript action surface, including typed transaction views, finite invariant quantifiers, bounded collections, type validity, explicit borrow regions, concrete payload enums, generic value declarations, explicit `public`/`public(package)`/`private` visibility, and labeled `break`/`continue` control flow:
+This README documents the current 0.22 authoring surface, including the
+language work staged on the `nightly-0.25` branch. The extension follows the
+current CellScript action surface: typed transaction views, finite invariant
+quantifiers, bounded collections, type validity, explicit borrow regions,
+concrete payload enums, generic value declarations, explicit
+`public`/`public(package)`/`private` visibility, and labeled
+`break`/`continue` control flow:
 
 ```cellscript
 action fill_offer(input: Offer) -> output: Offer {
