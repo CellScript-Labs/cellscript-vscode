@@ -56,7 +56,7 @@ executable, and fetch saves the Registry response without parsing and
 reserialising it. The commitment proves byte identity and placement; it does
 not prove that a Lock Script implements the described interface correctly.
 
-The 0.22 compiler also ships `cellscript-mcp`, compile receipts
+The 0.24 compiler also ships `cellscript-mcp`, compile receipts
 (`cellc receipt`, `cellc sign-receipt`, `cellc verify-receipt`),
 ProtocolGraph, TemplateLayout, and helper-backed aggregate evidence. Those
 surfaces remain compiler/MCP commands rather than VS Code command-palette
@@ -117,7 +117,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the current 0.22 authoring surface. This 0.25 nightly branch also previews generic value declarations, explicit `public`/`public(package)`/`private` visibility, and labeled `break`/`continue` control flow. The extension follows the current CellScript action surface, including typed transaction views, finite invariant quantifiers, bounded collections, type validity, explicit borrow regions, and concrete payload enums:
+This README documents the current 0.24 authoring surface. The extension follows the current CellScript action surface, including typed transaction views, finite invariant quantifiers, bounded collections, type validity, explicit borrow regions, and concrete payload enums:
 
 ```cellscript
 action fill_offer(input: Offer) -> output: Offer {
