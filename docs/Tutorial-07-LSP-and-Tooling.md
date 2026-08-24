@@ -60,10 +60,12 @@ cellc --lsp
 
 In practice you usually let the editor start it for you.
 
-On 0.22, qualified enum completion includes concrete payload constructors.
+On 0.25, qualified enum completion includes concrete and generic payload
+constructors.
 Enum hover reads the same compiler metadata as `cellc metadata` and shows the
 tagged-union layout, ABI, storage class, encoded width, and linear-payload flag.
-Generic or variable-width payload ADTs remain unsupported.
+Generic fixed-layout payload ADTs are specialized before IR; variable-width
+payload layouts remain unsupported.
 
 ## VS Code Extension
 
@@ -96,6 +98,7 @@ Useful settings:
 | `cellscript.builderOutputDir` | Output directory for generated TypeScript action-builder packages. Relative paths resolve from the nearest package `Cell.toml`. |
 | `cellscript.ckbRpcUrl` | Optional CKB RPC URL for live registry verification. |
 | `cellscript.deploymentNetwork` | Optional network filter for live registry verification and generated builder deployment binding. |
+| `cellscript.registryApiUrl` | Optional Registry API base URL used by LS-IDL fetch. |
 | `cellscript.registryRequirePublisherSignature` | Add `--require-publisher-signature` to registry verification commands. This is a metadata-presence gate, not cryptographic signature verification. |
 | `cellscript.registryRequireAuditReport` | Add `--require-audit-report` to registry verification commands. |
 
@@ -118,6 +121,13 @@ The extension contributes commands for the local compiler and builder loop:
 | `CellScript: Verify Registry` | `cellc registry verify --json` |
 | `CellScript: Verify Live Registry` | `cellc registry verify --live --json` |
 | `CellScript: Show Production Report` | compiler version + metadata + constraints + release-audit boundary |
+| `CellScript: Validate LS-IDL` | `cellc artifact ls-idl validate --idl <active-json>` |
+| `CellScript: Bind LS-IDL to CKB Executable` | `cellc artifact ls-idl bind --idl <active-json> --executable <file>` |
+| `CellScript: Fetch LS-IDL by CKB Script` | `cellc artifact ls-idl fetch --code-hash <hash> --output idl.json` |
+
+The editor saves fetched IDL as the exact response bytes and leaves schema,
+digest, and executable-suffix checks to `cellc`. This is an interface identity
+check, not proof of implementation correctness or a security audit.
 
 The 0.21 compiler also ships `cellscript-mcp`, compile receipts, ProtocolGraph,
 TemplateLayout, and helper-backed aggregate evidence. Those remain compiler/MCP

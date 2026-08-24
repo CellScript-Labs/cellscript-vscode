@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.25.0
+
+- Added highlighting and snippets for value generics, generic fixed arrays,
+  explicit visibility, nested value patterns, labeled `break`/`continue`, and
+  integer bitwise and shift operators.
+- Kept LS-IDL validation, executable binding, and exact Registry lookup from
+  the 0.24 line while aligning the package with the 0.25 compiler identity.
+- Clarified that editor feedback and command-palette reports support authoring;
+  production acceptance still belongs to the compiler, artifact checker, and
+  CKB release gates.
+
+## 0.24.0
+
+- Added command-palette flows to validate LS-IDL, append the raw IDL SHA-256
+  commitment to a CKB executable, and fetch exact IDL bytes by deployed Script
+  identity.
+- Added an optional Registry API setting for private or test deployments and
+  documented the interface-identity trust boundary.
+- Aligned the extension release identity and authoring documentation with the
+  CellScript 0.24 compiler line.
+
 ## 0.22.0
 
 - Aligned the extension package metadata with the CellScript 0.22 language
