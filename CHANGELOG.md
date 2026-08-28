@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.26.0
+
+- Aligned the extension package identity with the CellScript 0.26 compiler and
+  metadata boundary.
+- Documented the executable bounded-collection subset used by dynamic claim,
+  atomic settlement, Cell merge, and bridge/rollup batches; unsupported
+  collection shapes remain compiler-enforced fail-closed cases.
+- Kept runtime selection, canonical witness-plan decoding, GroupInput and
+  GroupOutput verification, and production evidence in `cellc` and the
+  artifact checker rather than duplicating consensus logic in the editor.
+
 ## 0.25.0
 
 - Added highlighting and snippets for value generics, generic fixed arrays,
