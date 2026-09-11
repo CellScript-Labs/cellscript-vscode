@@ -46,7 +46,7 @@
     "publish:dry-run": "npm run build && npx vsce package --no-dependencies --out /tmp/cellscript-vscode-dry-run.vsix"
   },
   "devDependencies": {
-    "@vscode/vsce": "^3.9.1",
+    "@vscode/vsce": "^3.9.2",
     "esbuild": "^0.25.3",
     "vscode-languageclient": "^9.0.1"
   },

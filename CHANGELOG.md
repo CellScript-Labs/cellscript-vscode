@@ -10,6 +10,8 @@
 - Kept runtime selection, canonical witness-plan decoding, GroupInput and
   GroupOutput verification, and production evidence in `cellc` and the
   artifact checker rather than duplicating consensus logic in the editor.
+- Refreshed the packaging toolchain to remove all reported npm dependency
+  vulnerabilities without changing the extension's runtime protocol.
 
 ## 0.25.0
 
