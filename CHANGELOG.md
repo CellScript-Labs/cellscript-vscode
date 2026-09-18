@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.30.0
+
+- Align the extension package with the 0.30 compiler and its bounded capability portfolio.
+- Retain the implemented formatter, language services, ProtocolBundle builders, and typed runtime-view support.
+
 ## 0.26.0
 
 - Aligned the extension package identity with the CellScript 0.26 compiler and
