@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.31.0
+
+- Align the extension with the 0.31 compiler and matching artifact checker.
+- Preserve the existing source syntax, metadata schema and language-server protocol.
+- Native artifacts use lowering record v9; rebuild all four bundle files together.
+
 ## 0.30.0
 
 - Align the extension package with the 0.30 compiler and its bounded capability portfolio.
