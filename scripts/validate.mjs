@@ -272,3 +272,8 @@ if (!changelog.includes(`## ${pkg.version}`)) {
 }
 
 console.log("CellScript VS Code extension manifest is valid.");
+
+for (const type of ["ZkTransitionProof", "VerificationKeyCommitment", "ExactScriptHandle"]) {
+  if (!grammar.repository.types.patterns.some(pattern => new RegExp(pattern.match).test(type))) throw new Error(`Missing exact ZK type: ${type}`);
+}
+if (!snippets["Exact ZK transition"]?.body?.join("\n").includes("zk::require_valid")) throw new Error("Missing exact ZK snippet");

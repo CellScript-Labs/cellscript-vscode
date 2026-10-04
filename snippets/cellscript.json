@@ -367,5 +367,12 @@
       "std::accounting::conserved(${1:output}, ${2:input})"
     ],
     "description": "Require output.amount == input.amount"
+  },
+  "Exact ZK transition": {
+    "prefix": "zk-verify",
+    "body": [
+      "zk::require_valid(\"${1:policy}\", ${2:proof}, ${3:dependency}, ${4:verifier}, ${5:handle_hash}, ${6:vk_hash}, ${7:domain}, ${8:action})"
+    ],
+    "description": "Require the exact Groth16 transition profile; package policy must match Cell.toml"
   }
 }

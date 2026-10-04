@@ -183,7 +183,7 @@
         },
         {
           "name": "support.type.collection.cellscript",
-          "match": "\\b(Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|CellDepView|HeaderDepView|WitnessArgsView|OutPoint|ScriptView)\\b"
+          "match": "\\b(ZkTransitionProof|VerificationKeyCommitment|ExactScriptHandle|Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|CellDepView|HeaderDepView|WitnessArgsView|OutPoint|ScriptView)\\b"
         },
         {
           "name": "support.type.effect.cellscript",
@@ -215,7 +215,7 @@
         },
         {
           "name": "support.function.namespace.cellscript",
-          "match": "\\b(?:Address|Hash|Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|env|source|witness|ckb|script|std|verifier)(?:::[A-Za-z_][A-Za-z0-9_]*)*::[A-Za-z_][A-Za-z0-9_]*\\b"
+          "match": "\\b(?:Address|Hash|ZkTransitionProof|VerificationKeyCommitment|ExactScriptHandle|Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|env|source|witness|ckb|script|std|verifier)(?:::[A-Za-z_][A-Za-z0-9_]*)*::[A-Za-z_][A-Za-z0-9_]*\\b"
         }
       ]
     },
