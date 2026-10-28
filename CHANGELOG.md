@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.33.0-alpha.1
+
+- Track the 0.33.0-alpha.1 compiler and artifact checker identities.
+
 ## 0.31.0
 
 - Align the extension with the 0.31 compiler and matching artifact checker.
