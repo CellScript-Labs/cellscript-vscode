@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.33.0-alpha.2
+
+- Align the extension package and lockfile with the 0.33.0-alpha.2 compiler.
+
 ## 0.33.0-alpha.1
 
 - Track the 0.33.0-alpha.1 compiler and artifact checker identities.
