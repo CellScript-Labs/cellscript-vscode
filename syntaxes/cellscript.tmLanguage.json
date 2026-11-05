@@ -67,7 +67,7 @@
       "patterns": [
         {
           "name": "meta.annotation.cellscript",
-          "begin": "(#\\[)(type_id|capabilities|effect|scheduler_hint)\\b",
+          "begin": "(#\\[)(type_id|capabilities|scheduler_hint)\\b",
           "beginCaptures": {
             "1": {
               "name": "punctuation.definition.annotation.begin.cellscript"
@@ -184,10 +184,6 @@
         {
           "name": "support.type.collection.cellscript",
           "match": "\\b(ZkTransitionProof|VerificationKeyCommitment|ExactScriptHandle|Vec|BoundedCellSet|BoundedList|View|InputView|OutputView|CellDepView|HeaderDepView|WitnessArgsView|OutPoint|ScriptView)\\b"
-        },
-        {
-          "name": "support.type.effect.cellscript",
-          "match": "\\b(Pure|ReadOnly|Mutating|Creating|Destroying)\\b"
         },
         {
           "name": "entity.name.type.cellscript",

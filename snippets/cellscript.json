@@ -90,13 +90,12 @@
     ],
     "description": "Declare pure value predicates for a persistent type"
   },
-  "Effect Attribute": {
-    "prefix": "effect",
+  "Scheduler Hint": {
+    "prefix": "scheduler-hint",
     "body": [
-      "#[effect(${1:Pure})]",
-      "#[scheduler_hint(${2:parallel}, estimated_cycles = ${3:1000})]"
+      "#[scheduler_hint(${1:parallel}, estimated_cycles = ${2:1000})]"
     ],
-    "description": "Insert effect and scheduler hint attributes"
+    "description": "Insert scheduler hints"
   },
   "Type ID Attribute": {
     "prefix": "type-id",
