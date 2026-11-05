@@ -163,11 +163,11 @@
         },
         {
           "name": "keyword.declaration.cellscript",
-          "match": "\\b(resource|shared|receipt|struct|const|enum|flow|action|fn|lock)\\b"
+          "match": "\\b(type_script|lock_script|resource|shared|receipt|struct|const|enum|flow|action|fn|lock)\\b"
         },
         {
           "name": "keyword.other.cellscript",
-          "match": "\\b(has|store|consume|consume_each|create|create_each|create_unique|replace_unique|read|read_ref|launch|transition|by|self|env|with_lock|assert|assert_invariant|invariant|require|preserve|from|input|output|protected|witness|lock_args|script_args|transfer|claim|settle|destroy|destroy_singleton_type|destroy_unique|destroy_instance|burn_amount|std|replace|burn|relock|retarget_type|identity|ckb_type_id|singleton_type|with_default_hash_type|with_capacity_floor)\\b"
+          "match": "\\b(on|type_group|lock_group|group_input|group_output|group_witness|current_script|data|capacity|same|except|pool|inputs|outputs|conserve|retire|fresh|absence|audit|expected_evidence|external_policy|has|store|consume|consume_each|create|create_each|create_unique|replace_unique|read|read_ref|launch|transition|by|self|env|with_lock|assert|assert_invariant|invariant|require|preserve|from|input|output|protected|witness|lock_args|script_args|transfer|claim|settle|destroy|destroy_singleton_type|destroy_unique|destroy_instance|burn_amount|std|replace|burn|relock|retarget_type|identity|ckb_type_id|singleton_type|with_default_hash_type|with_capacity_floor)\\b"
         },
         {
           "name": "constant.language.boolean.cellscript",
@@ -179,7 +179,7 @@
       "patterns": [
         {
           "name": "storage.type.primitive.cellscript",
-          "match": "\\b(u8|u16|u32|i32|u64|u128|bool|Address|Hash)\\b"
+          "match": "\\b(u8|u16|u32|i32|u64|u128|bool|Address|Hash|ScriptHash)\\b"
         },
         {
           "name": "support.type.collection.cellscript",

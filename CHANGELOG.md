@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Use ordinary `action`, `lock` and `require` bodies in explicit Script-group policies.
+- Add successor-relation and group-policy snippets with explicit Type Script, Lock and capacity rules.
+- Highlight group bindings, pooled accounting, creation and retirement with the current authoring vocabulary.
+
 ## 0.33.0-alpha.2
 
 - Align the extension package and lockfile with the 0.33.0-alpha.2 compiler.

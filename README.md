@@ -20,7 +20,8 @@ Use the extension to shorten local authoring. Keep release evidence in the compi
 ### Everyday Editing
 
 - Syntax highlighting for `.cell` files.
-- Snippets for resources, actions, locks, lifecycle helpers, proof blocks, source-qualified parameters, and CKB-oriented patterns.
+- Snippets for resources, actions, locks, successor relations, explicit Script-group policies, lifecycle helpers, proof blocks, source-qualified parameters, and CKB-oriented patterns.
+- Group policies use the same `action`, `lock`, `require`, and ordinary control-flow vocabulary as other modules. `replace` states data, Lock, Type Script and capacity treatments explicitly.
 - Live diagnostics as files open, change, and save.
 - Completion for keywords, types, fields, symbols, and locals.
 - Hover, go-to-definition, references, workspace rename, document symbols, document highlights, folding, selection ranges, and formatting.

@@ -161,7 +161,16 @@ for (const token of [
   "InputView",
   "OutputView",
   "by",
-  "i32"
+  "i32",
+  "ScriptHash",
+  "type_script",
+  "lock_script",
+  "type_group",
+  "group_input",
+  "group_output",
+  "pool",
+  "retire",
+  "fresh"
 ]) {
   if (!grammarText.includes(token)) {
     throw new Error(`grammar is missing current CellScript editor surface token: ${token}`);
@@ -188,7 +197,10 @@ for (const snippet of [
   "borrow-view",
   "validity",
   "flow-edge-by-action",
-  "invariant "
+  "invariant ",
+  "replace-relation",
+  "type-script-policy",
+  "lock-script-policy"
 ]) {
   if (!snippetsText.includes(snippet)) {
     throw new Error(`snippets are missing current CellScript authoring surface: ${snippet}`);
