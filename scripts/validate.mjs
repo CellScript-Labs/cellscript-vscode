@@ -1,5 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+const { SOURCE_SEMANTICS, requireSourceContract } = createRequire(import.meta.url)("../source-contract.js");
 
 const root = path.resolve(import.meta.dirname, "..");
 const repoRoot = path.resolve(root, "..", "..");
@@ -273,7 +276,7 @@ for (const token of [
   "selection ranges",
   "document symbols",
   "document highlights",
-  `current ${pkg.version.split(".").slice(0, 2).join(".")} authoring surface`
+  "Edition 2027 authoring-v3 source contract"
 ]) {
   if (!readme.includes(token)) {
     throw new Error(`extension README is missing current LSP/package coverage: ${token}`);
@@ -289,3 +292,19 @@ for (const type of ["ZkTransitionProof", "VerificationKeyCommitment", "ExactScri
   if (!grammar.repository.types.patterns.some(pattern => new RegExp(pattern.match).test(type))) throw new Error(`Missing exact ZK type: ${type}`);
 }
 if (!snippets["Exact ZK transition"]?.body?.join("\n").includes("zk::require_valid")) throw new Error("Missing exact ZK snippet");
+
+const contract = { schema: "cellscript-source-language-contract-v1", compiler_version: pkg.version,
+  edition: "2027", source_semantics: SOURCE_SEMANTICS, identifier_unicode_version: "17.0.0", max_source_bytes: 1048576 };
+assert.equal(requireSourceContract(contract), contract);
+for (const invalid of [null, {}, {...contract, source_semantics: "cellscript-source-semantics-2027-0.33-authoring-v2"},
+  {...contract, identifier_unicode_version: "16.0.0"}, {...contract, unexpected: true}]) {
+  assert.throws(() => requireSourceContract(invalid), /source contract mismatch/);
+}
+const checkerSchema = path.join(repoRoot, "crates/cellscript-artifact-checker/src/schema.rs");
+if (fs.existsSync(checkerSchema)) {
+  assert.ok(fs.readFileSync(checkerSchema, "utf8").includes(`SOURCE_SEMANTICS_2027: &str = "${SOURCE_SEMANTICS}"`));
+}
+assert.ok(!snippetsText.includes("verification"), "retired verification marker must not be emitted");
+assert.ok(snippets["Module"].body[0].endsWith(";"));
+assert.ok(snippets["Generic Call"].body[0].includes("::<"));
+assert.ok(snippets["Value Construction"].body[0].startsWith("new "));

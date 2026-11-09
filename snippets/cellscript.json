@@ -3,7 +3,7 @@
     "prefix": "action",
     "body": [
       "action ${1:name}(${2:input}: ${3:CellType}) -> ${4:output}: ${3:CellType} {",
-      "    require ${5:${4}.owner == ${2}.owner}",
+      "    require ${5:${4}.owner == ${2}.owner};",
       "}"
     ],
     "description": "Create a CellScript action with ordinary checked statements"
@@ -12,8 +12,9 @@
     "prefix": "lock",
     "body": [
       "lock ${1:name}(protected ${2:cell}: ${3:CellType}, witness ${4:arg}: ${5:Address}, lock_args ${6:owner}: ${7:Address}) -> bool {",
-      "    require ${6} == ${2}.owner",
-      "    require ${4} == ${6}",
+      "    require ${6} == ${2}.owner;",
+      "    require ${4} == ${6};",
+      "    true",
       "}"
     ],
     "description": "Create a CellScript lock with explicit protected, lock_args, and witness boundaries"
@@ -22,7 +23,7 @@
     "prefix": "resource",
     "body": [
       "resource ${1:Token} {",
-      "    ${2:amount}: ${3:u64}",
+      "    ${2:amount}: ${3:u64},",
       "}"
     ],
     "description": "Create a CellScript resource"
@@ -31,7 +32,7 @@
     "prefix": "shared",
     "body": [
       "shared ${1:Pool} {",
-      "    ${2:reserve}: ${3:u64}",
+      "    ${2:reserve}: ${3:u64},",
       "}"
     ],
     "description": "Create a CellScript shared state"
@@ -40,7 +41,7 @@
     "prefix": "receipt",
     "body": [
       "receipt ${1:Grant} {",
-      "    ${2:beneficiary}: ${3:Address}",
+      "    ${2:beneficiary}: ${3:Address},",
       "}"
     ],
     "description": "Create a CellScript receipt"
@@ -48,14 +49,14 @@
   "Module": {
     "prefix": "module",
     "body": [
-      "module ${1:cellscript::package::contract}"
+      "module ${1:cellscript::package::contract};"
     ],
     "description": "Declare a CellScript module path"
   },
   "Use": {
     "prefix": "use",
     "body": [
-      "use ${1:cellscript::package::module}::${2:Type}"
+      "use ${1:cellscript::package::module}::${2:Type};"
     ],
     "description": "Import a symbol from another CellScript module"
   },
@@ -64,7 +65,7 @@
     "body": [
       "enum ${1:State} {",
       "    ${2:Created},",
-      "    ${3:Live}",
+      "    ${3:Live},",
       "}"
     ],
     "description": "Declare a CellScript enum"
@@ -74,7 +75,7 @@
     "body": [
       "enum ${1:Result} {",
       "    ${2:None},",
-      "    ${3:Some}(${4:u64})",
+      "    ${3:Some}(${4:u64}),",
       "}"
     ],
     "description": "Declare a concrete fixed-width payload enum"
@@ -83,8 +84,8 @@
     "prefix": "validity",
     "body": [
       "validity",
-      "    require ${1:amount} > 0",
-      "    require ${2:locktime} > env::block_number()"
+      "    require ${1:amount} > 0;",
+      "    require ${2:locktime} > env::block_number();"
     ],
     "description": "Declare pure value predicates for a persistent type"
   },
@@ -113,7 +114,7 @@
     "prefix": "create",
     "body": [
       "create ${1:output} = ${2:Token} {",
-      "    ${3:amount}: ${4:1}",
+      "    ${3:amount}: ${4:1},",
       "} with_lock(${5:owner})"
     ],
     "description": "Constrain a named output with a lock"
@@ -121,8 +122,8 @@
   "Create Unique": {
     "prefix": "create-unique",
     "body": [
-      "create_unique<${1:Token}>(identity = ${2:ckb_type_id}) {",
-      "    ${3:amount}: ${4:1}",
+      "create_unique::<${1:Token}>(identity = ${2:ckb_type_id}) {",
+      "    ${3:amount}: ${4:1},",
       "} with_lock(${5:owner})"
     ],
     "description": "Create an identity-aware output cell"
@@ -130,8 +131,8 @@
   "Replace Unique": {
     "prefix": "replace-unique",
     "body": [
-      "replace_unique<${1:Token}>(identity = ${2:ckb_type_id}) ${3:input} {",
-      "    ${4:amount}: ${5:input.amount}",
+      "replace_unique::<${1:Token}>(identity = ${2:ckb_type_id}) ${3:input} {",
+      "    ${4:amount}: ${5:input.amount},",
       "}"
     ],
     "description": "Replace an identity-aware cell while preserving identity"
@@ -139,21 +140,21 @@
   "Destroy Unique": {
     "prefix": "destroy-unique",
     "body": [
-      "destroy_unique(${1:cell}, identity = ${2:type_id})"
+      "destroy_unique(${1:cell}, identity = ${2:type_id});"
     ],
     "description": "Destroy a cell with an explicit unique identity policy"
   },
   "Burn Amount": {
     "prefix": "burn-amount",
     "body": [
-      "burn_amount(${1:cell}, field = ${2:amount})"
+      "burn_amount(${1:cell}, field = ${2:amount});"
     ],
     "description": "Declare quantity-delta burn intent for a field"
   },
   "Transition": {
     "prefix": "transition",
     "body": [
-      "transition ${1:input}.${2:state}: ${3:From} -> ${4:output}.${2:state}: ${5:To}"
+      "transition ${1:input}.${2:state}: ${3:From} -> ${4:output}.${2:state}: ${5:To};"
     ],
     "description": "Declare a field-path state continuation"
   },
@@ -179,10 +180,10 @@
     "prefix": "invariant",
     "body": [
       "invariant ${1:name} {",
-      "    trigger: ${2:type_group}",
-      "    scope: ${3:group}",
-      "    reads: ${4:group_inputs<Token>.amount}, ${5:group_outputs<Token>.amount}",
-      "    assert_sum(${5}) == assert_sum(${4})",
+      "    trigger: ${2:type_group};",
+      "    scope: ${3:group};",
+      "    reads: ${4:group_inputs<Token>.amount}, ${5:group_outputs<Token>.amount};",
+      "    assert_sum(${5}) == assert_sum(${4});",
       "}"
     ],
     "description": "Declare an invariant with explicit trigger, scope, reads, and proof relation"
@@ -191,7 +192,7 @@
     "prefix": "invariant-forall",
     "body": [
       "forall ${1:output} ${2:item} in group_outputs<${3:Token}> {",
-      "    require ${2:item}.${4:amount} > 0",
+      "    require ${2:item}.${4:amount} > 0;",
       "}"
     ],
     "description": "Quantify over a finite typed transaction source view"
@@ -200,14 +201,14 @@
     "prefix": "bounded-collection-action",
     "body": [
       "action ${1:batch}(input ${2:inputs}: BoundedCellSet<${3:Token}, ${4:16}>, witness ${5:plans}: BoundedList<${6:Plan}, ${4:16}>) -> u64 {",
-      "    verification",
-      "        consume_each ${7:item} in ${2:inputs} {",
-      "            require ${7:item}.${8:amount} > 0",
-      "        }",
-      "        create_each ${9:plan} in ${5:plans} {",
-      "            require ${9:plan}.${8:amount} > 0",
-      "        }",
-      "        return 0",
+      "    consume_each ${7:item} in ${2:inputs} {",
+      "        require ${7:item}.${8:amount} > 0;",
+      "    }",
+      "    create_each ${9:plan} in ${5:plans} {",
+      "        require ${9:plan}.${8:amount} > 0;",
+      "        create ${3:Token} { ${8:amount}: ${9:plan}.${8:amount}, }",
+      "    }",
+      "    return 0;",
       "}"
     ],
     "description": "Declare finite input and witness collection iteration"
@@ -216,7 +217,7 @@
     "prefix": "borrow-view",
     "body": [
       "borrow ${1:root} as ${2:view} {",
-      "    require ${2:view}.${3:amount} > 0",
+      "    require ${2:view}.${3:amount} > 0;",
       "}"
     ],
     "description": "Create a compile-time-only read view over a linear Cell"
@@ -238,7 +239,7 @@
   "Require": {
     "prefix": "require",
     "body": [
-      "require ${1:condition}"
+      "require ${1:condition};"
     ],
     "description": "Fail the current script if a condition is false"
   },
@@ -246,43 +247,43 @@
     "prefix": "require-block",
     "body": [
       "require {",
-      "    ${1:condition}",
-      "}"
+      "    ${1:condition},",
+      "};"
     ],
     "description": "Group multiple require conditions in an anonymous block"
   },
   "Aggregate Sum": {
     "prefix": "assert-sum",
     "body": [
-      "assert_sum(${1:group_outputs<Token>.amount}) <= assert_sum(${2:group_inputs<Token>.amount})"
+      "assert_sum(${1:group_outputs<Token>.amount}) <= assert_sum(${2:group_inputs<Token>.amount});"
     ],
     "description": "Declare an aggregate sum relation inside an invariant"
   },
   "Aggregate Conserved": {
     "prefix": "assert-conserved",
     "body": [
-      "assert_conserved(${1:Token.amount}, scope = ${2:group})"
+      "assert_conserved(${1:Token.amount}, scope = ${2:group});"
     ],
     "description": "Declare aggregate conservation inside an invariant"
   },
   "Aggregate Delta": {
     "prefix": "assert-delta",
     "body": [
-      "assert_delta(${1:Token.amount}, ${2:witness.delta}, scope = ${3:group})"
+      "assert_delta(${1:Token.amount}, ${2:witness.delta}, scope = ${3:group});"
     ],
     "description": "Declare an aggregate delta relation inside an invariant"
   },
   "Aggregate Distinct": {
     "prefix": "assert-distinct",
     "body": [
-      "assert_distinct(${1:outputs<NFT>.token_id}, scope = ${2:transaction})"
+      "assert_distinct(${1:outputs<NFT>.token_id}, scope = ${2:transaction});"
     ],
     "description": "Declare aggregate distinctness inside an invariant"
   },
   "Aggregate Singleton": {
     "prefix": "assert-singleton",
     "body": [
-      "assert_singleton(${1:Config.config_id}, scope = ${2:group})"
+      "assert_singleton(${1:Config.config_id}, scope = ${2:group});"
     ],
     "description": "Declare singleton aggregate scope inside an invariant"
   },
@@ -290,7 +291,7 @@
     "prefix": "preserve",
     "body": [
       "preserve ${1:output} from ${2:input} {",
-      "    ${3:field}",
+      "    ${3:field},",
       "}"
     ],
     "description": "Preserve fields from input to output with require equality sugar"
@@ -298,35 +299,35 @@
   "Stdlib Same Lock": {
     "prefix": "std-cell-same-lock",
     "body": [
-      "std::cell::same_lock(${1:output}, ${2:input})"
+      "std::cell::same_lock(${1:output}, ${2:input});"
     ],
     "description": "Require output.lock_hash == input.lock_hash"
   },
   "Stdlib Same Type": {
     "prefix": "std-cell-same-type",
     "body": [
-      "std::cell::same_type(${1:output}, ${2:input})"
+      "std::cell::same_type(${1:output}, ${2:input});"
     ],
     "description": "Require output.type_hash == input.type_hash"
   },
   "Stdlib Preserve Lock": {
     "prefix": "std-cell-preserve-lock",
     "body": [
-      "std::cell::preserve_lock(${1:output}, ${2:input})"
+      "std::cell::preserve_lock(${1:output}, ${2:input});"
     ],
     "description": "Require output.lock_hash == input.lock_hash"
   },
   "Stdlib Preserve Type": {
     "prefix": "std-cell-preserve-type",
     "body": [
-      "std::cell::preserve_type(${1:output}, ${2:input})"
+      "std::cell::preserve_type(${1:output}, ${2:input});"
     ],
     "description": "Require output.type_hash == input.type_hash"
   },
   "Stdlib Preserve Capacity": {
     "prefix": "std-cell-preserve-capacity",
     "body": [
-      "std::cell::preserve_capacity(${1:output}, ${2:input})"
+      "std::cell::preserve_capacity(${1:output}, ${2:input});"
     ],
     "description": "Require output.capacity == input.capacity"
   },
@@ -334,9 +335,9 @@
     "prefix": "std-lifecycle-transfer",
     "body": [
       "std::lifecycle::transfer(${1:input}, ${2:output}, ${3:to}) {",
-      "    ${4:field1}",
-      "    ${5:field2}",
-      "}"
+      "    ${4:field1},",
+      "    ${5:field2},",
+      "};"
     ],
     "description": "Consume input, lock output, and preserve all output fields"
   },
@@ -344,8 +345,8 @@
     "prefix": "std-receipt-claim",
     "body": [
       "std::receipt::claim(${1:receipt}, ${2:output}, ${3:lock}) {",
-      "    ${4:field1}",
-      "}"
+      "    ${4:field1},",
+      "};"
     ],
     "description": "Consume receipt and create locked output preserving all output fields"
   },
@@ -353,22 +354,22 @@
     "prefix": "std-lifecycle-settle",
     "body": [
       "std::lifecycle::settle(${1:input}, ${2:output}, ${3:lock}) {",
-      "    ${4:field1}",
-      "}"
+      "    ${4:field1},",
+      "};"
     ],
     "description": "Consume input and create locked output preserving all output fields"
   },
   "Stdlib Conserved": {
     "prefix": "std-accounting-conserved",
     "body": [
-      "std::accounting::conserved(${1:output}, ${2:input})"
+      "std::accounting::conserved(${1:output}, ${2:input});"
     ],
     "description": "Require output.amount == input.amount"
   },
   "Exact ZK transition": {
     "prefix": "zk-verify",
     "body": [
-      "zk::require_valid(\"${1:policy}\", ${2:proof}, ${3:dependency}, ${4:verifier}, ${5:handle_hash}, ${6:vk_hash}, ${7:domain}, ${8:action})"
+      "zk::require_valid(\"${1:policy}\", ${2:proof}, ${3:dependency}, ${4:verifier}, ${5:handle_hash}, ${6:vk_hash}, ${7:domain}, ${8:action});"
     ],
     "description": "Require the exact Groth16 transition profile; package policy must match Cell.toml"
   },
@@ -377,11 +378,11 @@
     "body": [
       "replace ${1:before} -> ${2:after} {",
       "    data = same except {",
-      "        ${3:amount} = ${1}.${3} + ${4:1}",
-      "    }",
-      "    lock = same",
-      "    type_script = same",
-      "    capacity = same",
+      "        ${3:amount} = ${1}.${3} + ${4:1},",
+      "    };",
+      "    lock = same;",
+      "    type_script = same;",
+      "    capacity = same;",
       "}"
     ],
     "description": "Declare an exhaustive successor relation with explicit Lock, Type Script, and capacity preservation"
@@ -395,12 +396,12 @@
       "        witness ${5:recipient}: ScriptHash from group_witness.input_type,",
       "        output ${6:after}: ${2} from group_output[0],",
       "    ) {",
-      "        require ${4}.${7:amount} > 0",
+      "        require ${4}.${7:amount} > 0;",
       "        replace ${4} -> ${6} {",
-      "            data { ${7} = same }",
-      "            lock = exact_hash(${5})",
-      "            type_script = same",
-      "            capacity = same",
+      "            data { ${7} = same, };",
+      "            lock = exact_hash(${5});",
+      "            type_script = same;",
+      "            capacity = same;",
       "        }",
       "    }",
       "}"
@@ -412,10 +413,32 @@
     "body": [
       "lock_script ${1:WalletPolicy} on lock_group {",
       "    lock ${2:permit}(protected ${3:wallet}: ${4:Wallet} from group_input[0]) {",
-      "        require ${3}.${5:value} == ${6:7}",
+      "        require ${3}.${5:value} == ${6:7};",
+      "        true",
       "    }",
       "}"
     ],
     "description": "Create a Lock group binding and a checked predicate; replace the predicate with authenticated authorization for an ownership Lock"
+  },
+  "Value Construction": {
+    "prefix": "new",
+    "body": [
+      "new ${1:pair} { ${2:field}: ${3:value}, }"
+    ],
+    "description": "Construct an ordinary value; grants no Cell lifecycle or heap authority"
+  },
+  "Generic Call": {
+    "prefix": "generic-call",
+    "body": [
+      "${1:identity}::<${2:u64}>(${3:value})"
+    ],
+    "description": "Generic call expression; add a semicolon when discarding its result"
+  },
+  "Read Reference": {
+    "prefix": "read-ref",
+    "body": [
+      "read_ref::<${1:Config}>()"
+    ],
+    "description": "Read-reference expression with explicit type arguments"
   }
 }

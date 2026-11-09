@@ -260,3 +260,13 @@ profiles as future-facing or fail-closed.
 
 With the tooling loop in place, continue with
 [Bundled Example Contracts](https://github.com/a19q3/CellScript/wiki/Tutorial-08-Bundled-Example-Contracts).
+
+## Authoring-v3 pairing
+
+The current extension requires the Edition 2027 authoring-v3 contract, including
+Unicode 17.0.0 identifier tables. It checks the selected CLI executable with
+`cellc language-contract --json` and checks the LSP initialization result before
+enabling language features. Update the compiler and extension together; the
+Cargo release number does not distinguish different source contracts. Formatting
+uses the shared lossless parser and preserves comments. A stale document revision
+is rejected instead of receiving edits computed for an older snapshot.

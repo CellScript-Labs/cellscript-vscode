@@ -47,19 +47,7 @@
           "end": "$"
         },
         {
-          "name": "comment.block.cellscript",
-          "begin": "/\\*",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.begin.cellscript"
-            }
-          },
-          "end": "\\*/",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.end.cellscript"
-            }
-          }
+          "include": "#block_comment"
         }
       ]
     },
@@ -67,7 +55,7 @@
       "patterns": [
         {
           "name": "meta.annotation.cellscript",
-          "begin": "(#\\[)(type_id|capabilities|scheduler_hint)\\b",
+          "begin": "(#\\[)(type_id|scheduler_hint)\\b",
           "beginCaptures": {
             "1": {
               "name": "punctuation.definition.annotation.begin.cellscript"
@@ -116,7 +104,7 @@
           "patterns": [
             {
               "name": "constant.character.escape.cellscript",
-              "match": "\\\\(?:[nrt\\\\\"]|x[0-9A-Fa-f]{2})"
+              "match": "\\\\(?:[nrt0\\\\\"']|x[0-9A-Fa-f]{2})"
             }
           ]
         },
@@ -137,7 +125,7 @@
           "patterns": [
             {
               "name": "constant.character.escape.cellscript",
-              "match": "\\\\(?:[nrt\\\\\"])"
+              "match": "\\\\(?:[nrt0\\\\\"']|u\\{[0-9A-Fa-f]{1,6}\\})"
             }
           ]
         }
@@ -147,11 +135,11 @@
       "patterns": [
         {
           "name": "constant.numeric.hex.cellscript",
-          "match": "\\b0x[0-9A-Fa-f]+\\b"
+          "match": "(?<![\\p{XID_Continue}])0x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*(?![\\p{XID_Continue}])"
         },
         {
           "name": "constant.numeric.integer.cellscript",
-          "match": "\\b\\d+\\b"
+          "match": "(?<![\\p{XID_Continue}])[0-9](?:_?[0-9])*(?![\\p{XID_Continue}])"
         }
       ]
     },
@@ -159,7 +147,7 @@
       "patterns": [
         {
           "name": "keyword.control.cellscript",
-          "match": "\\b(module|use|if|else|for|forall|in|where|while|match|return|let|mut|ref|as|borrow|verification|validity)\\b"
+          "match": "\\b(module|use|if|else|for|forall|in|where|while|match|return|let|mut|ref|as|borrow|validity|break|continue|label|new)\\b"
         },
         {
           "name": "keyword.declaration.cellscript",
@@ -195,7 +183,7 @@
       "patterns": [
         {
           "name": "meta.function.definition.cellscript",
-          "match": "\\b(action|fn|lock)\\s+([a-zA-Z_][A-Za-z0-9_]*)\\b",
+          "match": "\\b(action|fn|lock)\\s+([\\p{XID_Start}_][\\p{XID_Continue}]*)",
           "captures": {
             "1": {
               "name": "keyword.declaration.function.cellscript"
@@ -235,11 +223,31 @@
       "patterns": [
         {
           "name": "keyword.operator.cellscript",
-          "match": "->|=>|::|==|!=|<=|>=|&&|\\|\\||\\+=|[-+*/%=&|!<>]"
+          "match": "->|=>|::|==|!=|<=|>=|<<|>>|&&|\\|\\||\\+=|[-+*/%=&|!<>^]"
         },
         {
           "name": "punctuation.separator.cellscript",
           "match": "[,;:.]"
+        }
+      ]
+    },
+    "block_comment": {
+      "name": "comment.block.cellscript",
+      "begin": "/\\*",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.cellscript"
+        }
+      },
+      "end": "\\*/",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.end.cellscript"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#block_comment"
         }
       ]
     }

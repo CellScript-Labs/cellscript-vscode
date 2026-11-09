@@ -4,6 +4,7 @@ const path = require("node:path");
 const os = require("node:os");
 const cp = require("node:child_process");
 const { LanguageClient, TransportKind } = require("vscode-languageclient/node");
+const { requireSourceContract } = require("./source-contract");
 
 const LANGUAGE_ID = "cellscript";
 const OUTPUT_NAME = "CellScript";
@@ -186,6 +187,8 @@ async function startLanguageServer(context, output, status) {
 
   try {
     await languageClient.start();
+    try { requireSourceContract(languageClient.initializeResult?.capabilities?.experimental?.cellscript); }
+    catch (error) { await languageClient.stop(); throw error; }
     status.text = "$(check) CellScript";
     status.tooltip = "CellScript Language Server active";
     output.appendLine("[cellscript] Language server started successfully.");
@@ -285,6 +288,7 @@ async function resolveCompilerCommand(document) {
   };
 
   if (compilerPath && (await canExecute(compilerPath, ["--version"], undefined, options))) {
+    await requireCompilerContract(compilerPath, [], undefined, options);
     return { command: compilerPath, args: [], cwd: undefined, options };
   }
 
@@ -299,6 +303,7 @@ async function resolveCompilerCommand(document) {
     const manifestPath = path.join(cargoToml, "Cargo.toml");
     const args = ["run", "-q", "--manifest-path", manifestPath, "-p", "cellscript", "--"];
     if (await canExecute("cargo", [...args, "--version"], cargoToml, options)) {
+      await requireCompilerContract("cargo", args, cargoToml, options);
       return { command: "cargo", args, cwd: cargoToml, options };
     }
   }
@@ -315,6 +320,13 @@ function findCargoWorkspace(startDir) {
     current = path.dirname(current);
   }
   return null;
+}
+
+async function requireCompilerContract(command, args, cwd, options) {
+  const result = await runCommand(command, [...args, "language-contract", "--json"], cwd, options);
+  let contract;
+  try { contract = result.code === 0 ? JSON.parse(result.stdout) : null; } catch { contract = null; }
+  return requireSourceContract(contract);
 }
 
 function canExecute(command, args, cwd, options) {
