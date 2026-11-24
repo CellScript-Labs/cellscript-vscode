@@ -387,10 +387,10 @@
     ],
     "description": "Declare an exhaustive successor relation with explicit Lock, Type Script, and capacity preservation"
   },
-  "Type Script Policy": {
-    "prefix": "type-script-policy",
+  "Action with Cell Roles": {
+    "prefix": "cell-role-action",
     "body": [
-      "type_script ${1:transfer}(",
+      "action ${1:transfer}(",
       "    input ${2:before}: ${3:Token},",
       "    witness ${4:recipient}: ScriptHash,",
       "    output ${5:after}: ${3:Token},",
@@ -404,7 +404,7 @@
       "    }",
       "}"
     ],
-    "description": "Declare a Type Script group entry with role-derived bindings"
+    "description": "Declare Cell roles, with bindings and coverage selected in Cell.toml"
   },
   "Lock Script Policy": {
     "prefix": "lock-script-policy",

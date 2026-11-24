@@ -151,7 +151,11 @@
         },
         {
           "name": "keyword.declaration.cellscript",
-          "match": "\\b(type_script|lock_script|resource|shared|receipt|struct|const|enum|flow|action|fn|lock)\\b"
+          "match": "\\b(lock_script|resource|shared|receipt|struct|const|enum|flow|action|fn|lock)\\b"
+        },
+        {
+          "name": "keyword.other.cellscript",
+          "match": "\\btype_script\\b(?=\\s*=)"
         },
         {
           "name": "keyword.other.cellscript",

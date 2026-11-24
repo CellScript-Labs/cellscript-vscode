@@ -172,6 +172,7 @@ async function startLanguageServer(context, output, status) {
 
   const clientOptions = {
     documentSelector: [{ scheme: "file", language: LANGUAGE_ID }],
+    initializationOptions: { entryArtifact: config.get("entryArtifact") },
     outputChannel: output,
     synchronize: {
       configurationSection: "cellscript"

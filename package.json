@@ -356,6 +356,11 @@
           "default": "riscv64-asm",
           "description": "Compiler target used by compile, metadata, and constraints commands."
         },
+        "cellscript.entryArtifact": {
+          "type": "string",
+          "default": "",
+          "description": "Named Cell.toml artifact to use for language server diagnostics and hover. Reload the window after changing this setting."
+        },
         "cellscript.builderOutputDir": {
           "type": "string",
           "default": "target/cellscript-builder/typescript",

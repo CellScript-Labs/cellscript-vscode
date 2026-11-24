@@ -202,7 +202,7 @@ for (const snippet of [
   "flow-edge-by-action",
   "invariant ",
   "replace-relation",
-  "type-script-policy",
+  "cell-role-action",
   "lock-script-policy"
 ]) {
   if (!snippetsText.includes(snippet)) {
@@ -276,7 +276,7 @@ for (const token of [
   "selection ranges",
   "document symbols",
   "document highlights",
-  "Edition 2027 authoring-v6 source contract"
+  "Edition 2027 authoring-v7 source contract"
 ]) {
   if (!readme.includes(token)) {
     throw new Error(`extension README is missing current LSP/package coverage: ${token}`);
