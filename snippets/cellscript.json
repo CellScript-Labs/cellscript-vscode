@@ -262,28 +262,28 @@
   "Aggregate Conserved": {
     "prefix": "assert-conserved",
     "body": [
-      "assert_conserved(${1:Token.amount}, scope = ${2:group});"
+      "assert_conserved(${1:Token.amount});"
     ],
     "description": "Declare aggregate conservation inside an invariant"
   },
   "Aggregate Delta": {
     "prefix": "assert-delta",
     "body": [
-      "assert_delta(${1:Token.amount}, ${2:witness.delta}, scope = ${3:group});"
+      "assert_delta(${1:Token.amount}, ${2:witness.delta});"
     ],
     "description": "Declare an aggregate delta relation inside an invariant"
   },
   "Aggregate Distinct": {
     "prefix": "assert-distinct",
     "body": [
-      "assert_distinct(${1:outputs<NFT>.token_id}, scope = ${2:transaction});"
+      "assert_distinct(${1:outputs<NFT>.token_id});"
     ],
     "description": "Declare aggregate distinctness inside an invariant"
   },
   "Aggregate Singleton": {
     "prefix": "assert-singleton",
     "body": [
-      "assert_singleton(${1:Config.config_id}, scope = ${2:group});"
+      "assert_singleton(${1:Config.config_id});"
     ],
     "description": "Declare singleton aggregate scope inside an invariant"
   },
@@ -390,14 +390,14 @@
   "Type Script Policy": {
     "prefix": "type-script-policy",
     "body": [
-      "type_script ${1:TokenPolicy} on type_group<${2:Token}> {",
-      "    action ${3:transfer}(",
-      "        input ${4:before}: ${2} from group_input[0],",
+      "type_script ${1:TokenPolicy} {",
+      "    action ${2:transfer}(",
+      "        input ${3:before}: ${4:Token} from group_input[0],",
       "        witness ${5:recipient}: ScriptHash from group_witness.input_type,",
-      "        output ${6:after}: ${2} from group_output[0],",
+      "        output ${6:after}: ${4} from group_output[0],",
       "    ) {",
-      "        require ${4}.${7:amount} > 0;",
-      "        replace ${4} -> ${6} {",
+      "        require ${3}.${7:amount} > 0;",
+      "        replace ${3} -> ${6} {",
       "            data { ${7} = same, };",
       "            lock = exact_hash(${5});",
       "            type_script = same;",
@@ -411,7 +411,7 @@
   "Lock Script Policy": {
     "prefix": "lock-script-policy",
     "body": [
-      "lock_script ${1:WalletPolicy} on lock_group {",
+      "lock_script ${1:WalletPolicy} {",
       "    lock ${2:permit}(protected ${3:wallet}: ${4:Wallet} from group_input[0]) {",
       "        require ${3}.${5:value} == ${6:7};",
       "        true",

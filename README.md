@@ -118,7 +118,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the Edition 2027 authoring-v3 source contract. The extension follows
+This README documents the Edition 2027 authoring-v5 source contract. The extension follows
 the current CellScript action surface: typed transaction views, finite
 invariant quantifiers, bounded collections, type validity, explicit borrow
 regions, concrete payload enums, generic value declarations, explicit
@@ -151,7 +151,7 @@ lock owner_only(protected cell: Wallet, witness owner: Address) -> bool {
 
 The extension checks `cellc language-contract --json` for CLI commands and the
 LSP initialization contract for language features. Both must report
-`cellscript-source-semantics-2027-0.33-authoring-v3`, Edition 2027 and Unicode
+`cellscript-source-semantics-2027-0.33-authoring-v5`, Edition 2027 and Unicode
 17.0.0. A matching Cargo release number alone is insufficient. On mismatch,
 select a matching compiler with `cellscript.compilerPath` and restart the
 language server. Constructors use `new Type { ... }`; generic calls use
