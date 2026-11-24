@@ -1,5 +1,5 @@
 // A release number does not identify an evolving alpha source grammar.
-const SOURCE_SEMANTICS = "cellscript-source-semantics-2027-0.33-authoring-v5";
+const SOURCE_SEMANTICS = "cellscript-source-semantics-2027-0.33-authoring-v6";
 const FIELDS = ["schema", "compiler_version", "edition", "source_semantics", "identifier_unicode_version", "max_source_bytes"].sort();
 
 function requireSourceContract(contract) {

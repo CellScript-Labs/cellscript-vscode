@@ -390,35 +390,31 @@
   "Type Script Policy": {
     "prefix": "type-script-policy",
     "body": [
-      "type_script ${1:TokenPolicy} {",
-      "    action ${2:transfer}(",
-      "        input ${3:before}: ${4:Token} from group_input[0],",
-      "        witness ${5:recipient}: ScriptHash from group_witness.input_type,",
-      "        output ${6:after}: ${4} from group_output[0],",
-      "    ) {",
-      "        require ${3}.${7:amount} > 0;",
-      "        replace ${3} -> ${6} {",
-      "            data { ${7} = same, };",
-      "            lock = exact_hash(${5});",
-      "            type_script = same;",
-      "            capacity = same;",
-      "        }",
+      "type_script ${1:transfer}(",
+      "    input ${2:before}: ${3:Token},",
+      "    witness ${4:recipient}: ScriptHash,",
+      "    output ${5:after}: ${3:Token},",
+      ") {",
+      "    require ${2:before}.${6:amount} > 0;",
+      "    replace ${2:before} -> ${5:after} {",
+      "        data = same;",
+      "        lock = exact_hash(${4:recipient});",
+      "        type_script = same;",
+      "        capacity = same;",
       "    }",
       "}"
     ],
-    "description": "Create a Type Script group policy using the ordinary action and require grammar"
+    "description": "Declare a Type Script group entry with role-derived bindings"
   },
   "Lock Script Policy": {
     "prefix": "lock-script-policy",
     "body": [
-      "lock_script ${1:WalletPolicy} {",
-      "    lock ${2:permit}(protected ${3:wallet}: ${4:Wallet} from group_input[0]) {",
-      "        require ${3}.${5:value} == ${6:7};",
-      "        true",
-      "    }",
+      "lock_script ${1:permit}(protected ${2:wallet}: ${3:Wallet}) {",
+      "    require ${2:wallet}.${4:value} == ${5:7};",
+      "    true",
       "}"
     ],
-    "description": "Create a Lock group binding and a checked predicate; replace the predicate with authenticated authorization for an ownership Lock"
+    "description": "Declare a Lock Script group entry with a protected Cell role"
   },
   "Value Construction": {
     "prefix": "new",

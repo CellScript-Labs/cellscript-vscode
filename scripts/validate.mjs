@@ -276,7 +276,7 @@ for (const token of [
   "selection ranges",
   "document symbols",
   "document highlights",
-  "Edition 2027 authoring-v5 source contract"
+  "Edition 2027 authoring-v6 source contract"
 ]) {
   if (!readme.includes(token)) {
     throw new Error(`extension README is missing current LSP/package coverage: ${token}`);
