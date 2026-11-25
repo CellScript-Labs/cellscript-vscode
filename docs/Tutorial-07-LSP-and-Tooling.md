@@ -264,7 +264,7 @@ With the tooling loop in place, continue with
 
 ## Authoring-v7 pairing
 
-The current extension requires the Edition 2027 authoring-v7 contract, including
+The current extension requires the Edition 2027 authoring-v8 contract, including
 Unicode 17.0.0 identifier tables. It checks the selected CLI executable with
 `cellc language-contract --json` and checks the LSP initialization result before
 enabling language features. Update the compiler and extension together; the
