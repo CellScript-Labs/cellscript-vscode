@@ -276,7 +276,7 @@ for (const token of [
   "selection ranges",
   "document symbols",
   "document highlights",
-  "Edition 2027 authoring-v8 source contract"
+  "Edition 2027 authoring-v9 source contract"
 ]) {
   if (!readme.includes(token)) {
     throw new Error(`extension README is missing current LSP/package coverage: ${token}`);
@@ -308,3 +308,8 @@ assert.ok(!snippetsText.includes("verification"), "retired verification marker m
 assert.ok(snippets["Module"].body[0].endsWith(";"));
 assert.ok(snippets["Generic Call"].body[0].includes("::<"));
 assert.ok(snippets["Value Construction"].body[0].startsWith("new "));
+assert.ok(snippets["Action"].body[0].includes("(input "));
+assert.ok(snippets["Action"].body[0].includes(", output "));
+assert.ok(!snippets["Action"].body[0].includes("->"), "named Cell outputs use inline roles");
+assert.ok(snippets["Lock Script Policy"].body[0].startsWith("lock "));
+assert.ok(!snippetsText.includes("lock_script "), "retired Lock declaration must not be emitted");

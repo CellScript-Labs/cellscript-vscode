@@ -262,9 +262,9 @@ profiles as future-facing or fail-closed.
 With the tooling loop in place, continue with
 [Bundled Example Contracts](https://github.com/a19q3/CellScript/wiki/Tutorial-08-Bundled-Example-Contracts).
 
-## Authoring-v7 pairing
+## Authoring-v9 pairing
 
-The current extension requires the Edition 2027 authoring-v8 contract, including
+The current extension requires the Edition 2027 authoring-v9 contract, including
 Unicode 17.0.0 identifier tables. It checks the selected CLI executable with
 `cellc language-contract --json` and checks the LSP initialization result before
 enabling language features. Update the compiler and extension together; the

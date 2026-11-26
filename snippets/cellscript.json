@@ -2,7 +2,7 @@
   "Action": {
     "prefix": "action",
     "body": [
-      "action ${1:name}(${2:input}: ${3:CellType}) -> ${4:output}: ${3:CellType} {",
+      "action ${1:name}(input ${2:input}: ${3:CellType}, output ${4:output}: ${3:CellType}) {",
       "    require ${5:${4}.owner == ${2}.owner};",
       "}"
     ],
@@ -409,12 +409,12 @@
   "Lock Script Policy": {
     "prefix": "lock-script-policy",
     "body": [
-      "lock_script ${1:permit}(protected ${2:wallet}: ${3:Wallet}) {",
+      "lock ${1:permit}(protected ${2:wallet}: ${3:Wallet}) {",
       "    require ${2:wallet}.${4:value} == ${5:7};",
       "    true",
       "}"
     ],
-    "description": "Declare a Lock Script group entry with a protected Cell role"
+    "description": "Declare an ordinary Lock entry with a protected Cell role; select its Lock-group artifact in Cell.toml"
   },
   "Value Construction": {
     "prefix": "new",

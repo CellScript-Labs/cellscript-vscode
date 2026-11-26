@@ -118,7 +118,7 @@ For package-based projects, run package commands from a file under the nearest `
 
 ## Authoring Model
 
-This README documents the Edition 2027 authoring-v8 source contract. The extension follows
+This README documents the Edition 2027 authoring-v9 source contract. The extension follows
 the current CellScript action surface: typed transaction views, finite
 invariant quantifiers, bounded collections, type validity, explicit borrow
 regions, concrete payload enums, generic value declarations, explicit
@@ -126,7 +126,7 @@ regions, concrete payload enums, generic value declarations, explicit
 control flow, and LS-IDL validation, binding, and lookup commands:
 
 ```cellscript
-action fill_offer(input: Offer) -> output: Offer {
+action fill_offer(input input: Offer, output output: Offer) {
     transition input.state: Live -> output.state: Filled;
 
         require output.price == input.price;
@@ -137,7 +137,7 @@ action fill_offer(input: Offer) -> output: Offer {
 Action and lock bodies contain ordinary checked statements. End guards, bindings, calls used as statements and explicit returns with `;`; a final value expression has no terminator. At action and lock boundaries, write source qualifiers before the parameter name:
 
 ```cellscript
-action grant(read config: Config, tokens: Token) -> grant: Grant {
+action grant(read config: Config, input tokens: Token, output grant: Grant) {
         create grant = Grant { admin: config.admin }
 }
 
@@ -148,10 +148,21 @@ lock owner_only(protected cell: Wallet, witness owner: Address) -> bool {
 ```
 
 `create output = T { ... }` constrains a named proposed output Cell. It is not runtime allocation.
+These excerpts illustrate selected checks. A partial field equality does not
+establish complete replacement, group coverage, or authorization. The complete
+Cell-role action snippet uses explicit replacement policies. Lock entries use
+ordinary `lock` declarations selected by a Lock-group artifact in `Cell.toml`.
+The named `flow Name for T.state` and compact `flow T.state` forms retain their
+declared graph identities; flow edges require semicolons.
+
+General `&mut T` references and `launch` are reserved executable boundaries.
+Mutable local values and admitted read-only borrow scopes keep their own
+contracts. Explicit visibility is recommended for reusable interfaces; omitted
+visibility retains the compiler's `implicit-public` compatibility rule.
 
 The extension checks `cellc language-contract --json` for CLI commands and the
 LSP initialization contract for language features. Both must report
-`cellscript-source-semantics-2027-0.33-authoring-v8`, Edition 2027 and Unicode
+`cellscript-source-semantics-2027-0.33-authoring-v9`, Edition 2027 and Unicode
 17.0.0. A matching Cargo release number alone is insufficient. On mismatch,
 select a matching compiler with `cellscript.compilerPath` and restart the
 language server. Constructors use `new Type { ... }`; generic calls use
